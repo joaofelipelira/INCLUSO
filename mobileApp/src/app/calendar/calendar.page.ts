@@ -5,27 +5,28 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { 
   chevronBack, ellipsisVertical, timeOutline, locationOutline, 
-  person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle 
+  person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle, chevronForward
 } from 'ionicons/icons';
 
 interface DaySlot {
-  fullDate: Date; // Data completa para comparação
-  dayNumber: string; // Ex: "18"
-  weekDay: string; // Ex: "Seg"
+  fullDate: Date;
+  dayNumber: string;
+  weekDay: string;
   active: boolean;
   hasEvent: boolean;
 }
 
 interface ScheduleItem {
   id: number;
-  date: Date; // Data do evento para filtro
-  time: string;
-  endTime: string;
+  date: Date;
+  timeStart: string; // Mudou de 'time' para 'timeStart' para bater com o layout novo
+  timeEnd: string;
   title: string;
   location: string;
   type: 'class' | 'exam' | 'activity';
-  status: 'now' | 'pending' | 'done' | 'future';
-  description?: string;
+  status: 'now' | 'pending' | 'future';
+  duration?: string; // Ex: "em 45min"
+  alert?: string;    // Ex: "Pendente"
 }
 
 @Component({
@@ -41,14 +42,17 @@ export class CalendarPage implements OnInit {
   currentMonth: string = '';
   days: DaySlot[] = [];
   
-  // Lista FILTRADA que aparece na tela
+  // Lista que aparece na tela
   filteredSchedule: ScheduleItem[] = [];
-
-  // "Banco de Dados" Local (Todos os eventos)
+  
+  // Simulação de banco de dados
   allEvents: ScheduleItem[] = [];
 
   constructor(private navCtrl: NavController) {
-    addIcons({ chevronBack, ellipsisVertical, timeOutline, locationOutline, person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle });
+    addIcons({ 
+      chevronBack, ellipsisVertical, timeOutline, locationOutline, 
+      person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle, chevronForward 
+    });
   }
 
   ngOnInit() {
@@ -57,57 +61,69 @@ export class CalendarPage implements OnInit {
     this.selectToday();
   }
 
-  // 1. Simula dados vindos do banco
   initializeData() {
     const today = new Date();
     
+    // Criando dados fictícios para Hoje e Amanhã
     this.allEvents = [
       { 
         id: 1,
-        date: today, // Evento de HOJE
-        time: '09:10', endTime: '10:00',
-        title: 'Matemática - Álgebra', location: 'Sala 101', 
-        type: 'class', status: 'now'
+        date: today,
+        timeStart: '09:10', timeEnd: '10:00',
+        title: 'Matemática - Álgebra', 
+        location: 'Sala 101', 
+        type: 'class', 
+        status: 'now',
+        duration: 'Agora'
       },
       { 
         id: 2,
-        date: today, // Evento de HOJE
-        time: '10:10', endTime: '11:00',
-        title: 'História Geral', location: 'Sala 302', 
-        type: 'class', status: 'pending'
+        date: today,
+        timeStart: '10:10', timeEnd: '11:00',
+        title: 'História Geral', 
+        location: 'Sala 302', 
+        type: 'class', 
+        status: 'pending',
+        duration: 'em 10min'
       },
       { 
         id: 3,
-        date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1), // Evento de AMANHÃ
-        time: '08:00', endTime: '09:30',
-        title: 'Educação Física', location: 'Quadra', 
-        type: 'activity', status: 'future'
+        date: today,
+        timeStart: '11:10', timeEnd: '12:00',
+        title: 'Entrega de Trabalho', 
+        location: 'Secretaria', 
+        type: 'activity', 
+        status: 'future',
+        alert: 'Pendente', // Isso aciona o badge vermelho
+        duration: 'em 1h'
       },
+      // Evento para amanhã para testar a troca de dias
       { 
         id: 4,
-        date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2), // Evento DEPOIS DE AMANHÃ
-        time: '07:30', endTime: '09:00',
-        title: 'Prova de Geografia', location: 'Sala 105', 
-        type: 'exam', status: 'future', description: 'Conteúdo: Cap 4 e 5'
+        date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1),
+        timeStart: '08:00', timeEnd: '09:30',
+        title: 'Educação Física', 
+        location: 'Quadra', 
+        type: 'activity', 
+        status: 'future',
+        duration: '08:00'
       }
     ];
   }
 
-  // 2. Gera os dias da semana dinamicamente
   generateWeekDays() {
     const today = new Date();
-    const daysToShow = 5; // Mostrar 5 dias na barra
+    const daysToShow = 5; 
     this.days = [];
 
-    // Formata Mês/Ano do título (Ex: "Outubro, 2025")
-    this.currentMonth = today.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-    this.currentMonth = this.currentMonth.charAt(0).toUpperCase() + this.currentMonth.slice(1);
+    // Formata título (Ex: "Dezembro de 2025")
+    const monthName = today.toLocaleDateString('pt-BR', { month: 'long' });
+    this.currentMonth = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} de ${today.getFullYear()}`;
 
     for (let i = 0; i < daysToShow; i++) {
       const date = new Date();
       date.setDate(today.getDate() + i);
 
-      // Verifica se tem evento nesse dia para por a "bolinha"
       const hasEvent = this.allEvents.some(e => 
         e.date.getDate() === date.getDate() && 
         e.date.getMonth() === date.getMonth()
@@ -116,27 +132,24 @@ export class CalendarPage implements OnInit {
       this.days.push({
         fullDate: date,
         dayNumber: date.getDate().toString(),
-        weekDay: date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').slice(0, 3),
-        active: i === 0, // O primeiro (hoje) começa ativo
+        weekDay: date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', ''),
+        active: false,
         hasEvent: hasEvent
       });
     }
   }
 
-  // 3. Seleciona o dia de hoje ao abrir
   selectToday() {
     if (this.days.length > 0) {
       this.selectDay(this.days[0]);
     }
   }
 
-  // 4. Lógica ao clicar no dia
   selectDay(selectedDay: DaySlot) {
-    // Atualiza visual ativo
     this.days.forEach(d => d.active = false);
     selectedDay.active = true;
 
-    // Filtra a lista de eventos
+    // Filtra os eventos do dia selecionado
     this.filteredSchedule = this.allEvents.filter(e => 
       e.date.getDate() === selectedDay.fullDate.getDate() &&
       e.date.getMonth() === selectedDay.fullDate.getMonth()
