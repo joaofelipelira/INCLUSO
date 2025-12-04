@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, ToastController } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { mailOutline, chevronBackOutline, alertCircleOutline, checkmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,11 +20,11 @@ export class ForgotPasswordPage {
   constructor(
     private navCtrl: NavController,
     private toastCtrl: ToastController
-  ) { }
+  ) {
+    addIcons({ mailOutline, chevronBackOutline, alertCircleOutline, checkmarkOutline });
+  }
 
-  // Validação de Email
   get isValidEmail(): boolean {
-    // Regra: Texto + @ + Texto + . + Texto (Ex: nome@site.com)
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(this.email);
   }
@@ -30,22 +32,12 @@ export class ForgotPasswordPage {
   async onRecover() {
     if (this.isValidEmail) {
       this.isSent = true;
-
-      const toast = await this.toastCtrl.create({
-        message: 'Email de recuperação enviado!',
-        duration: 2000,
-        color: 'success',
-        position: 'bottom'
-      });
-      toast.present();
-
     } else {
-      // Segurança extra caso o botão seja forçado
       const toast = await this.toastCtrl.create({
         message: 'Por favor, digite um e-mail válido.',
         duration: 2000,
         color: 'warning',
-        position: 'bottom'
+        position: 'top'
       });
       toast.present();
     }
