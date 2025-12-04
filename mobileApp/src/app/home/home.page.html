@@ -9,7 +9,12 @@
         <span>{{ data.user.name }}</span>
       </div>
     </div>
-    <ion-icon name="settings-sharp" class="settings-icon"></ion-icon>
+    
+    <ion-icon 
+      name="settings-sharp" 
+      class="settings-icon" 
+      (click)="goToSettings()">
+    </ion-icon>
   </div>
 
   <div class="content-container">
@@ -91,7 +96,7 @@
       <span class="menu-badge" *ngIf="data.stats.messages > 0">{{ data.stats.messages }}</span>
     </div>
 
-    <div class="menu-icon">
+    <div class="menu-icon" (click)="goToCalendar()">
       <ion-icon name="calendar"></ion-icon>
     </div>
 

@@ -1,0 +1,253 @@
+/* --- CORES DO TEMA (RIGOROSAMENTE VERDE E BEGE) --- */
+$theme-color: #60996E;       /* Verde Sage Principal */
+$accent-color: #F3EACD;      /* Bege do projeto */
+$text-color: #444444;        /* Cinza escuro neutro (sem azul) */
+$bg-color: #fcfcfc;          /* Fundo quase branco */
+
+ion-content {
+  --background: #{$bg-color};
+}
+
+.calendar-header {
+  background-color: $theme-color;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  box-shadow: 0 4px 20px rgba(96, 153, 110, 0.25);
+  margin-bottom: 20px;
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    color: white;
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    ion-icon {
+      font-size: 24px;
+      opacity: 0.9;
+    }
+  }
+}
+
+.calendar-wrapper {
+  padding: 0 10px;
+  
+  ion-datetime {
+    --background: transparent;
+    --title-color: #fff;
+    color: #fff;
+    border-radius: 20px;
+    margin: 0 auto;
+    max-width: 350px;
+    
+    /* Dias normais (Branco levemente transparente) */
+    &::part(calendar-day) {
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+
+    /* Dia Selecionado (BOLINHA BEGE com texto VERDE) */
+    &::part(calendar-day active), 
+    &::part(calendar-day active):focus {
+      background-color: $accent-color;
+      color: $theme-color;
+      font-weight: 800;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Dia de Hoje (Borda Branca) */
+    &::part(calendar-day today) {
+      border: 1px solid rgba(255,255,255,0.6);
+      color: #fff;
+    }
+  }
+}
+
+.events-container {
+  padding: 0 20px;
+  padding-bottom: 100px;
+}
+
+.week-group {
+  margin-bottom: 30px;
+
+  .week-label {
+    font-size: 1rem;
+    font-weight: 800;
+    color: $text-color; /* Cinza Neutro */
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid $theme-color; /* Barra verde na esquerda */
+    line-height: 1.2;
+  }
+}
+
+.event-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 15px;
+  /* Sombra suave e neutra */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.1s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  /* Data à esquerda */
+  .date-box {
+    background: #F4F6F8; /* Cinza bem clarinho */
+    border-radius: 14px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .day {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: $theme-color; /* Verde */
+      line-height: 1;
+    }
+    .month {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #999; /* Cinza */
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+  }
+
+  .event-info {
+    flex: 1;
+    h4 {
+      margin: 0 0 6px 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: $text-color; /* Cinza Escuro */
+      line-height: 1.3;
+    }
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #888;
+      font-size: 0.8rem;
+      font-weight: 500;
+
+      ion-icon {
+        color: $theme-color; /* Ícone Verde */
+        font-size: 14px;
+      }
+    }
+  }
+
+  /* Indicador colorido na direita */
+  .indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  /* Cores dos eventos (Ajustadas para não ter azul berrante) */
+  &.exam .indicator { background-color: #eb445a; } /* Prova = Vermelho */
+  &.meeting .indicator { background-color: $theme-color; } /* Reunião = Verde */
+  &.holiday .indicator { background-color: #e0ac08; } /* Feriado = Amarelo Queimado */
+  &.activity .indicator { background-color: #888; } /* Atividade = Cinza */
+}
+
+/* FAB e Menu Inferior (Verde e Bege) */
+.custom-fab {
+  margin-bottom: 15px;
+  margin-right: 10px;
+  ion-fab-button {
+    --background: #{$theme-color};
+    --color: #fff;
+    --box-shadow: 0 4px 15px rgba(96, 153, 110, 0.4);
+  }
+}
+
+.expanded-menu-bar {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 320px;
+  height: 65px;
+  background-color: rgba(243, 234, 205, 0.95); /* Bege Translúcido */
+  backdrop-filter: blur(10px);
+  border-radius: 35px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 15px;
+  z-index: 999;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255,255,255,0.4);
+
+  .menu-icon {
+    color: $theme-color;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  
+    &.relative { position: relative; }
+  
+    &.active {
+      background-color: $theme-color;
+      color: white;
+      box-shadow: 0 4px 10px rgba(96, 153, 110, 0.3);
+    }
+
+    &:active { transform: scale(0.9); }
+  }
+
+  .close-btn-container {
+    background-color: $theme-color;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    margin-left: 10px;
+    box-shadow: 0 4px 10px rgba(96, 153, 110, 0.3);
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translate(-50%, 100px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}

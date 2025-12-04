@@ -12,22 +12,26 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    loadComponent: () => import('./home/home.page').then( m => m.HomePage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
   },
   {
     path: 'chat',
     loadComponent: () => import('./chat/chat.page').then( m => m.ChatPage)
   },
   {
-    path: 'forgot-password',
-    loadComponent: () => import('./forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
-  },
-  {
     path: 'chat-detail',
     loadComponent: () => import('./chat-detail/chat-detail.page').then( m => m.ChatDetailPage)
   },
   {
-    path: 'settings',
-    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
+    path: 'forgot-password',
+    loadComponent: () => import('./forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
+  },
+  {
+    path: 'calendar',
+    loadComponent: () => import('./calendar/calendar.page').then( m => m.CalendarPage)
   },
 ];

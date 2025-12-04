@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, NavController } from '@ionic/angular'; 
+import { IonicModule, NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons'; 
 import { 
   settingsSharp, 
@@ -10,11 +10,11 @@ import {
   checkmarkCircleOutline, 
   chatbubbleEllipsesOutline, 
   chevronForwardCircle, 
-  menuOutline,
-  person,
-  chatbubbles,
-  calendar,
-  helpCircle,
+  menuOutline, 
+  person, 
+  chatbubbles, 
+  calendar, 
+  helpCircle, 
   chevronBack
 } from 'ionicons/icons';
 
@@ -55,7 +55,6 @@ export class HomePage implements OnInit {
   data: DashboardData | null = null;
   isMenuOpen = false;
 
-  // Injetando o NavController no construtor
   constructor(private navCtrl: NavController) {
     addIcons({ 
       settingsSharp, 
@@ -65,11 +64,11 @@ export class HomePage implements OnInit {
       checkmarkCircleOutline, 
       chatbubbleEllipsesOutline, 
       chevronForwardCircle, 
-      menuOutline,
-      person,
-      chatbubbles,
-      calendar,
-      helpCircle,
+      menuOutline, 
+      person, 
+      chatbubbles, 
+      calendar, 
+      helpCircle, 
       chevronBack
     });
   }
@@ -88,7 +87,7 @@ export class HomePage implements OnInit {
         name: 'Maurício Fabrício da Silva',
         school: 'Escola Estadual Djalma',
         class: '6 Ano D',
-        avatar: 'https://i.pravatar.cc/150?img=11'
+        avatar: 'https://i.pravatar.cc/150?img=11' // Foto padrão profissional
       },
       stats: {
         pendingTasks: 2, 
@@ -109,8 +108,18 @@ export class HomePage implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Função para navegar até a página de Chat
+  // Navegação para o Chat
   goToChat() {
     this.navCtrl.navigateForward('/chat');
+  }
+
+  // Navegação para Configurações
+  goToSettings() {
+    this.navCtrl.navigateForward('/settings');
+  }
+
+  // NOVA: Navegação para o Calendário
+  goToCalendar() {
+    this.navCtrl.navigateForward('/calendar');
   }
 }
