@@ -6,7 +6,10 @@
         <ion-icon name="chevron-back"></ion-icon>
       </ion-button>
       
-      <h2>{{ currentMonth }}</h2>
+      <h2 id="open-modal-calendar" style="display:flex; align-items:center; gap:5px;">
+        {{ currentMonth }}
+        <ion-icon name="caret-down-outline" style="font-size: 0.8rem"></ion-icon>
+      </h2>
       
       <ion-button fill="clear" class="white-icon-btn">
         <ion-icon name="ellipsis-vertical"></ion-icon>
@@ -22,14 +25,35 @@
     </div>
   </div>
 
+  <ion-modal trigger="open-modal-calendar" [keepContentsMounted]="true" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5]">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <ion-datetime 
+          presentation="date" 
+          [value]="selectedDateISO" 
+          (ionChange)="onDateChange($event)"
+          mode="ios"
+          locale="pt-BR"
+          color="success">
+        </ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
   <div class="timeline-container">
     
     <div class="no-events" *ngIf="filteredSchedule.length === 0">
-      <p>Nenhuma atividade para este dia.</p>
+      <ion-icon name="calendar-clear-outline" style="font-size: 40px; color: #ccc; margin-bottom: 10px;"></ion-icon>
+      <p>Nenhuma atividade registrada.</p>
     </div>
 
     <div class="timeline-wrapper" *ngFor="let item of filteredSchedule" [class.is-now]="item.status === 'now'">
       
+      <div class="now-indicator-line" *ngIf="item.status === 'now'">
+        <div class="triangle"></div>
+        <div class="line"></div>
+      </div>
+
       <div class="event-card" [ngClass]="item.type">
         
         <div class="time-section">
@@ -42,7 +66,6 @@
         <div class="info-section">
           <div class="info-header">
             <h3 class="subject-title">{{ item.title }}</h3>
-            
             <span class="status-badge" *ngIf="item.status === 'now'">Agora</span>
             <span class="status-text" *ngIf="item.status !== 'now'">{{ item.duration }}</span>
           </div>
@@ -68,7 +91,7 @@
   </div>
 
   <ion-fab *ngIf="!isMenuOpen" vertical="bottom" horizontal="end" slot="fixed" class="custom-fab">
-    <ion-fab-button (click)="toggleMenu()" class="green-btn">
+    <ion-fab-button (click)="toggleMenu()">
       <ion-icon name="menu-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

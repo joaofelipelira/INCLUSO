@@ -334,15 +334,37 @@ ion-content {
   }
 }
 
-/* --- FAB BOTÃO FLUTUANTE --- */
+/* --- FAB BOTÃO FLUTUANTE (Correção de Cor) --- */
 .custom-fab {
   margin-bottom: 10px;
   margin-right: 5px;
   
-  /* Força o botão a ser VERDE e não azul */
-  .green-btn {
-    --background: #60996E !important; /* Verde Sage */
-    --color: white !important;
+  /* Target direto no componente para forçar o verde */
+  ion-fab-button {
+    --background: #60996E; /* Verde Sage */
+    --background-activated: #4e805a;
+    --background-hover: #4e805a;
+    --color: white;
     --box-shadow: 0 4px 10px rgba(96, 153, 110, 0.3);
   }
+}
+
+.no-events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  opacity: 0.6;
+
+  p {
+    font-size: 1rem;
+    color: #888;
+    font-weight: 500;
+  }
+}
+
+/* Ajuste visual para o título clicável */
+.top-bar h2 {
+  cursor: pointer;
 }
