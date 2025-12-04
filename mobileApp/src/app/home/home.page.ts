@@ -81,13 +81,15 @@ export class HomePage implements OnInit {
     this.data = {
       user: {
         name: 'Maria Betânia da Silva',
-        avatar: 'https://i.pravatar.cc/150?img=5'
+        // Foto real da mãe (Mantida)
+        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80'
       },
       student: {
         name: 'Maurício Fabrício da Silva',
         school: 'Escola Estadual Djalma',
         class: '6 Ano D',
-        avatar: 'https://i.pravatar.cc/150?img=11' // Foto padrão profissional
+        // Nova imagem (Link fornecido)
+        avatar: 'https://i.pinimg.com/736x/78/7f/b4/787fb4d6d5085e2c34d71611a0219d16.jpg'
       },
       stats: {
         pendingTasks: 2, 
@@ -108,17 +110,14 @@ export class HomePage implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Navegação para o Chat
   goToChat() {
     this.navCtrl.navigateForward('/chat');
   }
 
-  // Navegação para Configurações
   goToSettings() {
     this.navCtrl.navigateForward('/settings');
   }
 
-  // NOVA: Navegação para o Calendário
   goToCalendar() {
     this.navCtrl.navigateForward('/calendar');
   }

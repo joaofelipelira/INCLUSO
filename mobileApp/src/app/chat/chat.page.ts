@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, NavController } from '@ionic/angular';
-import { NavigationExtras } from '@angular/router'; // Importante para passar dados
+import { NavigationExtras } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   ellipsisVertical,
@@ -49,7 +49,6 @@ export class ChatPage implements OnInit {
       {
         id: 1,
         name: 'Diretora Lívia Villar',
-        // Foto profissional de uma mulher em ambiente corporativo/educacional
         avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
         isGroup: false,
         lastMessage: 'Bom dia, Maria! Tudo bem? Conseguiu os documentos p...',
@@ -59,7 +58,6 @@ export class ChatPage implements OnInit {
       {
         id: 2,
         name: 'Psicóloga Adelaide Hamej',
-        // Foto profissional com aparência acolhedora, adequada para psicóloga
         avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80',
         isGroup: false,
         lastMessage: 'Sim, se possível pegar todos esses listados, é melhor ain...',
@@ -69,7 +67,7 @@ export class ChatPage implements OnInit {
       {
         id: 3,
         name: 'Turma 6º Ano - D',
-        avatar: '6D', // Mantido como iniciais, comum para grupos sem foto definida
+        avatar: '6D',
         isGroup: true,
         senderName: 'Michelle Souza',
         lastMessage: 'Lívia me disse ontem. Mesmo assim obri...',
@@ -79,9 +77,8 @@ export class ChatPage implements OnInit {
       {
         id: 4,
         name: 'Festa do Dia das Crianças - 6º D',
-        // ATUALIZADO: Imagem temática de festa com balões coloridos
         avatar: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=300&q=80',
-        isGroup: false, // Nota: Pelo nome, parece um grupo, mas mantive 'false' conforme seu código original.
+        isGroup: false,
         senderName: 'Lívia Villar',
         lastMessage: 'Lembrando que é importante a presença de ...',
         time: 'Ontem',
@@ -98,11 +95,14 @@ export class ChatPage implements OnInit {
     this.navCtrl.navigateBack('/home');
   }
 
-  // Função que abre o chat específico
+  goToCalendar() {
+    this.navCtrl.navigateForward('/calendar');
+  }
+
   openChat(chat: ChatConversation) {
     let navigationExtras: NavigationExtras = {
       state: {
-        conversation: chat // Envia o objeto inteiro (nome, foto, etc)
+        conversation: chat
       }
     };
     this.navCtrl.navigateForward(['chat-detail'], navigationExtras);

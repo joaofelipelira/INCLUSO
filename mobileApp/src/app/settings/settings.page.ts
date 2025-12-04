@@ -4,14 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, ToastController, AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { 
-  arrowBack, 
-  personOutline, 
-  notificationsOutline, 
-  moonOutline, 
-  lockClosedOutline, 
-  logOutOutline, 
-  chevronForward,
-  helpCircleOutline
+  arrowBack, personOutline, notificationsOutline, moonOutline, 
+  lockClosedOutline, logOutOutline, chevronForward, helpCircleOutline 
 } from 'ionicons/icons';
 
 @Component({
@@ -31,27 +25,18 @@ export class SettingsPage implements OnInit {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController
   ) {
-    // Registrando todos os ícones usados nesta página
     addIcons({ 
-      arrowBack, 
-      personOutline, 
-      notificationsOutline, 
-      moonOutline, 
-      lockClosedOutline, 
-      logOutOutline, 
-      chevronForward, 
-      helpCircleOutline 
+      arrowBack, personOutline, notificationsOutline, moonOutline, 
+      lockClosedOutline, logOutOutline, chevronForward, helpCircleOutline 
     });
   }
 
   ngOnInit() { }
 
-  // Voltar para a Home
   goBack() {
     this.navCtrl.navigateBack('/home');
   }
 
-  // Simula ativação/desativação de notificações
   async toggleNotifications() {
     const message = this.notificationsEnabled ? 'Notificações Ativadas' : 'Notificações Desativadas';
     const toast = await this.toastCtrl.create({
@@ -63,20 +48,21 @@ export class SettingsPage implements OnInit {
     toast.present();
   }
 
-  // Lógica de Logout com Confirmação
   async onLogout() {
     const alert = await this.alertCtrl.create({
-      header: 'Sair',
-      message: 'Deseja realmente sair do aplicativo?',
+      header: 'Sair da Conta',
+      message: 'Tem certeza que deseja sair do aplicativo?',
+      cssClass: 'custom-logout-alert', // Classe CSS personalizada para o Alerta
       buttons: [
         {
           text: 'Cancelar',
-          role: 'cancel'
+          role: 'cancel',
+          cssClass: 'alert-button-cancel' // Classe para o botão Cancelar
         },
         {
           text: 'Sair',
+          cssClass: 'alert-button-confirm', // Classe para o botão Sair
           handler: () => {
-            // Redireciona para o Login e limpa o histórico de navegação
             this.navCtrl.navigateRoot('/login');
           }
         }
