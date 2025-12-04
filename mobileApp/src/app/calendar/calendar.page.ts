@@ -4,28 +4,28 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { 
-  chevronBack, 
-  ellipsisVertical, 
-  timeOutline, 
-  locationOutline,
-  person,
-  chatbubbles,
-  calendar,
-  helpCircle,
-  menuOutline
+  chevronBack, ellipsisVertical, timeOutline, locationOutline, 
+  person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle 
 } from 'ionicons/icons';
 
-interface CalendarEvent {
-  day: string;
-  month: string;
-  title: string;
-  time: string;
-  type: 'exam' | 'holiday' | 'meeting' | 'activity'; 
+interface DaySlot {
+  fullDate: Date; // Data completa para comparação
+  dayNumber: string; // Ex: "18"
+  weekDay: string; // Ex: "Seg"
+  active: boolean;
+  hasEvent: boolean;
 }
 
-interface WeekGroup {
-  label: string;
-  events: CalendarEvent[];
+interface ScheduleItem {
+  id: number;
+  date: Date; // Data do evento para filtro
+  time: string;
+  endTime: string;
+  title: string;
+  location: string;
+  type: 'class' | 'exam' | 'activity';
+  status: 'now' | 'pending' | 'done' | 'future';
+  description?: string;
 }
 
 @Component({
@@ -37,64 +37,113 @@ interface WeekGroup {
 })
 export class CalendarPage implements OnInit {
 
-  selectedDate: string = new Date().toISOString();
   isMenuOpen = false;
+  currentMonth: string = '';
+  days: DaySlot[] = [];
+  
+  // Lista FILTRADA que aparece na tela
+  filteredSchedule: ScheduleItem[] = [];
 
-  weekGroups: WeekGroup[] = [];
+  // "Banco de Dados" Local (Todos os eventos)
+  allEvents: ScheduleItem[] = [];
 
   constructor(private navCtrl: NavController) {
-    addIcons({ 
-      chevronBack, 
-      ellipsisVertical, 
-      timeOutline, 
-      locationOutline,
-      person,
-      chatbubbles,
-      calendar,
-      helpCircle,
-      menuOutline
-    });
+    addIcons({ chevronBack, ellipsisVertical, timeOutline, locationOutline, person, chatbubbles, calendar, helpCircle, menuOutline, alertCircle });
   }
 
   ngOnInit() {
-    this.loadEvents();
+    this.initializeData();
+    this.generateWeekDays();
+    this.selectToday();
   }
 
-  loadEvents() {
-    this.weekGroups = [
-      {
-        label: 'Esta Semana',
-        events: [
-          { day: '08', month: 'OUT', title: 'Aula de Reforço - Matemática', time: '14:00 - 15:30', type: 'activity' },
-          { day: '10', month: 'OUT', title: 'Reunião de Pais e Mestres', time: '18:00', type: 'meeting' },
-          { day: '11', month: 'OUT', title: 'Festa do Dia das Crianças', time: '09:00 - 12:00', type: 'activity' }
-        ]
+  // 1. Simula dados vindos do banco
+  initializeData() {
+    const today = new Date();
+    
+    this.allEvents = [
+      { 
+        id: 1,
+        date: today, // Evento de HOJE
+        time: '09:10', endTime: '10:00',
+        title: 'Matemática - Álgebra', location: 'Sala 101', 
+        type: 'class', status: 'now'
       },
-      {
-        label: 'Próxima Semana',
-        events: [
-          { day: '15', month: 'OUT', title: 'Prova de Matemática 2TRI', time: '07:30', type: 'exam' },
-          { day: '17', month: 'OUT', title: 'Entrega de Trabalho de História', time: 'Até as 23:59', type: 'activity' }
-        ]
+      { 
+        id: 2,
+        date: today, // Evento de HOJE
+        time: '10:10', endTime: '11:00',
+        title: 'História Geral', location: 'Sala 302', 
+        type: 'class', status: 'pending'
       },
-      {
-        label: 'Final do Mês',
-        events: [
-          { day: '28', month: 'OUT', title: 'Feriado Escolar', time: 'Dia todo', type: 'holiday' }
-        ]
+      { 
+        id: 3,
+        date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1), // Evento de AMANHÃ
+        time: '08:00', endTime: '09:30',
+        title: 'Educação Física', location: 'Quadra', 
+        type: 'activity', status: 'future'
+      },
+      { 
+        id: 4,
+        date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2), // Evento DEPOIS DE AMANHÃ
+        time: '07:30', endTime: '09:00',
+        title: 'Prova de Geografia', location: 'Sala 105', 
+        type: 'exam', status: 'future', description: 'Conteúdo: Cap 4 e 5'
       }
     ];
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  // 2. Gera os dias da semana dinamicamente
+  generateWeekDays() {
+    const today = new Date();
+    const daysToShow = 5; // Mostrar 5 dias na barra
+    this.days = [];
+
+    // Formata Mês/Ano do título (Ex: "Outubro, 2025")
+    this.currentMonth = today.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+    this.currentMonth = this.currentMonth.charAt(0).toUpperCase() + this.currentMonth.slice(1);
+
+    for (let i = 0; i < daysToShow; i++) {
+      const date = new Date();
+      date.setDate(today.getDate() + i);
+
+      // Verifica se tem evento nesse dia para por a "bolinha"
+      const hasEvent = this.allEvents.some(e => 
+        e.date.getDate() === date.getDate() && 
+        e.date.getMonth() === date.getMonth()
+      );
+
+      this.days.push({
+        fullDate: date,
+        dayNumber: date.getDate().toString(),
+        weekDay: date.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '').slice(0, 3),
+        active: i === 0, // O primeiro (hoje) começa ativo
+        hasEvent: hasEvent
+      });
+    }
   }
 
-  goBack() {
-    this.navCtrl.navigateBack('/home');
+  // 3. Seleciona o dia de hoje ao abrir
+  selectToday() {
+    if (this.days.length > 0) {
+      this.selectDay(this.days[0]);
+    }
   }
 
-  goToChat() {
-    this.navCtrl.navigateForward('/chat');
+  // 4. Lógica ao clicar no dia
+  selectDay(selectedDay: DaySlot) {
+    // Atualiza visual ativo
+    this.days.forEach(d => d.active = false);
+    selectedDay.active = true;
+
+    // Filtra a lista de eventos
+    this.filteredSchedule = this.allEvents.filter(e => 
+      e.date.getDate() === selectedDay.fullDate.getDate() &&
+      e.date.getMonth() === selectedDay.fullDate.getMonth()
+    );
   }
+
+  toggleMenu() { this.isMenuOpen = !this.isMenuOpen; }
+  goBack() { this.navCtrl.navigateBack('/home'); }
+  goToChat() { this.navCtrl.navigateForward('/chat'); }
 }

@@ -1,41 +1,65 @@
 <ion-content [fullscreen]="true">
 
-  <div class="calendar-header">
-    <div class="header-top">
-      <ion-icon name="chevron-back" (click)="goBack()"></ion-icon>
-      <h1>Calendário Escolar</h1>
-      <ion-icon name="ellipsis-vertical"></ion-icon>
+  <div class="calendar-header-fixed">
+    <div class="top-bar">
+      <ion-button fill="clear" (click)="goBack()" color="light">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+      <h2>{{ currentMonth }}</h2>
+      <ion-button fill="clear" color="light">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
     </div>
 
-    <div class="calendar-wrapper">
-      <ion-datetime 
-        presentation="date" 
-        size="cover" 
-        [value]="selectedDate"
-        class="custom-datetime">
-      </ion-datetime>
+    <div class="days-strip">
+      <div class="day-item" *ngFor="let d of days" [class.active]="d.active" (click)="selectDay(d)">
+        <span class="day-name">{{ d.weekDay }}</span>
+        <span class="day-number">{{ d.dayNumber }}</span>
+        <div class="dot" *ngIf="d.hasEvent"></div>
+      </div>
     </div>
   </div>
 
-  <div class="events-container">
+  <div class="timeline-container">
     
-    <div class="week-group" *ngFor="let group of weekGroups">
-      <h3 class="week-label">{{ group.label }}</h3>
+    <div class="no-events" *ngIf="filteredSchedule.length === 0">
+      <p>Sem atividades para este dia.</p>
+    </div>
 
-      <div class="event-card" *ngFor="let event of group.events" [ngClass]="event.type">
-        <div class="date-box">
-          <span class="day">{{ event.day }}</span>
-          <span class="month">{{ event.month }}</span>
-        </div>
-        <div class="event-info">
-          <h4>{{ event.title }}</h4>
-          <div class="meta">
-            <ion-icon name="time-outline"></ion-icon>
-            <span>{{ event.time }}</span>
-          </div>
-        </div>
-        <div class="indicator"></div>
+    <div class="timeline-row" *ngFor="let item of filteredSchedule" [class.active-now]="item.status === 'now'">
+      
+      <div class="time-col">
+        <span class="start-time">{{ item.time }}</span>
+        <span class="end-time">{{ item.endTime }}</span>
       </div>
+
+      <div class="now-indicator-line" *ngIf="item.status === 'now'">
+        <div class="triangle"></div>
+        <div class="line"></div>
+      </div>
+
+      <div class="card-col">
+        <div class="event-card" [ngClass]="item.type">
+          <div class="card-content">
+            <h3>{{ item.title }}</h3>
+            
+            <div class="details">
+              <span class="location">
+                <ion-icon name="location-outline"></ion-icon> 
+                {{ item.location }}
+              </span>
+              
+              <span class="warning-badge" *ngIf="item.description">
+                <ion-icon name="alert-circle"></ion-icon>
+                Pendência
+              </span>
+            </div>
+          </div>
+          
+          <div class="status-label" *ngIf="item.status === 'now'">Agora</div>
+        </div>
+      </div>
+
     </div>
 
   </div>
