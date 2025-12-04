@@ -22,4 +22,12 @@ export const routes: Routes = [
     path: 'forgot-password',
     loadComponent: () => import('./forgot-password/forgot-password.page').then( m => m.ForgotPasswordPage)
   },
+  {
+    path: 'chat-detail',
+    loadComponent: () => import('./chat-detail/chat-detail.page').then( m => m.ChatDetailPage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
+  },
 ];

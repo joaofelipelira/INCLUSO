@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router'; // Importante para passar dados
 import { addIcons } from 'ionicons';
-import { 
-  ellipsisVertical, 
-  person, 
-  chatbubbles, 
-  calendar, 
-  helpCircle, 
+import {
+  ellipsisVertical,
+  person,
+  chatbubbles,
+  calendar,
+  helpCircle,
   chevronBack,
-  menuOutline 
+  menuOutline
 } from 'ionicons/icons';
 
 interface ChatConversation {
   id: number;
   name: string;
-  avatar: string; // URL da imagem ou Texto (ex: '6D')
-  isGroup: boolean; // Define se mostra foto redonda ou sigla da turma
+  avatar: string;
+  isGroup: boolean;
   lastMessage: string;
-  senderName?: string; // Para grupos: "Michelle Souza: ..."
+  senderName?: string;
   time: string;
   unreadCount: number;
 }
@@ -36,15 +37,7 @@ export class ChatPage implements OnInit {
   isMenuOpen = false;
 
   constructor(private navCtrl: NavController) {
-    addIcons({ 
-      ellipsisVertical, 
-      person, 
-      chatbubbles, 
-      calendar, 
-      helpCircle, 
-      chevronBack,
-      menuOutline
-    });
+    addIcons({ ellipsisVertical, person, chatbubbles, calendar, helpCircle, chevronBack, menuOutline });
   }
 
   ngOnInit() {
@@ -56,7 +49,8 @@ export class ChatPage implements OnInit {
       {
         id: 1,
         name: 'Diretora Lívia Villar',
-        avatar: 'https://i.pinimg.com/736x/e9/11/db/e911dbc10c23f33b8b271abdc61e9fb4.jpg', // NOVA IMAGEM
+        // Foto profissional de uma mulher em ambiente corporativo/educacional
+        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
         isGroup: false,
         lastMessage: 'Bom dia, Maria! Tudo bem? Conseguiu os documentos p...',
         time: '09:55',
@@ -65,7 +59,8 @@ export class ChatPage implements OnInit {
       {
         id: 2,
         name: 'Psicóloga Adelaide Hamej',
-        avatar: 'https://i.pinimg.com/736x/bd/54/b0/bd54b0d61c8012ca4379fd512f3cf82c.jpg', // NOVA IMAGEM
+        // Foto profissional com aparência acolhedora, adequada para psicóloga
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80',
         isGroup: false,
         lastMessage: 'Sim, se possível pegar todos esses listados, é melhor ain...',
         time: '08:12',
@@ -74,7 +69,7 @@ export class ChatPage implements OnInit {
       {
         id: 3,
         name: 'Turma 6º Ano - D',
-        avatar: '6D', // Voltou para a sigla "6D"
+        avatar: '6D', // Mantido como iniciais, comum para grupos sem foto definida
         isGroup: true,
         senderName: 'Michelle Souza',
         lastMessage: 'Lívia me disse ontem. Mesmo assim obri...',
@@ -84,8 +79,9 @@ export class ChatPage implements OnInit {
       {
         id: 4,
         name: 'Festa do Dia das Crianças - 6º D',
-        avatar: 'https://i.pravatar.cc/150?img=25', // Mantido como exemplo
-        isGroup: false, 
+        // ATUALIZADO: Imagem temática de festa com balões coloridos
+        avatar: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=300&q=80',
+        isGroup: false, // Nota: Pelo nome, parece um grupo, mas mantive 'false' conforme seu código original.
         senderName: 'Lívia Villar',
         lastMessage: 'Lembrando que é importante a presença de ...',
         time: 'Ontem',
@@ -100,5 +96,15 @@ export class ChatPage implements OnInit {
 
   goToHome() {
     this.navCtrl.navigateBack('/home');
+  }
+
+  // Função que abre o chat específico
+  openChat(chat: ChatConversation) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        conversation: chat // Envia o objeto inteiro (nome, foto, etc)
+      }
+    };
+    this.navCtrl.navigateForward(['chat-detail'], navigationExtras);
   }
 }
