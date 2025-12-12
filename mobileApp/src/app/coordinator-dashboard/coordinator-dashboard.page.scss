@@ -1,157 +1,163 @@
-// Variáveis de Cores
-$primary-color: #2C3E50;
-$secondary-color: #3498DB;
-$accent-color: #60996E;
-$success-color: #27AE60;
-$warning-color: #F39C12;
-$danger-color: #E74C3C;
-$light-bg: #F8F9FA;
-$card-bg: #FFFFFF;
-$text-dark: #2C3E50;
-$text-light: #7F8C8D;
+@use "sass:color";
 
+// ============================================
+// VARIÁVEIS DO DESIGN SYSTEM
+// ============================================
+$primary-color: #60996E;        // Verde Sálvia (Principal)
+$text-dark: #333333;            // Texto Principal
+$text-secondary: #666666;       // Texto Secundário
+$text-light: #999999;           // Texto Claro
+$bg-page: #f9f9f9;              // Fundo da Página
+$bg-card: #ffffff;              // Fundo dos Cards
+$border-radius-lg: 20px;        // Border Radius Grande (Cards)
+$border-radius-md: 12px;        // Border Radius Médio (Botões)
+$shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05); // Sombra Suave
+
+// ============================================
+// CONTENT PRINCIPAL
+// ============================================
 ion-content {
-  --background: #{$light-bg};
+  --background: #f5f6f9; // Fundo levemente acinzentado para profundidade
 }
 
-// TOOLBAR
-.custom-toolbar {
-  --background: #{$primary-color};
-  --color: white;
-  --padding-top: 10px;
+// ============================================
+// HEADER/TOOLBAR
+// ============================================
+.clean-toolbar {
+  --background: transparent;
+  --border-width: 0;
   --min-height: 60px;
+  padding-top: 10px;
 
-  ion-title {
-    font-weight: 800;
-    font-size: 1.2rem;
-  }
-
-  ion-icon {
+  .back-button {
+    --color: #{$text-dark};
     font-size: 24px;
   }
+
+  .page-title {
+    color: $primary-color;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+  }
 }
 
-// HEADER COM FILTROS
-.dashboard-header {
-  background: $card-bg;
+// ============================================
+// CONTAINER DE FILTROS
+// ============================================
+.filters-container {
   padding: 20px;
+  background: $bg-card;
   margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-subtle;
+  margin: 0 15px 20px;
 
-  .header-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  .clean-searchbar {
+    --background: #{$bg-page};
+    --border-radius: #{$border-radius-md};
+    --box-shadow: none;
+    --icon-color: #{$primary-color};
+    --placeholder-color: #{$text-secondary};
+    --color: #{$text-dark};
+    padding: 0;
+    margin-bottom: 15px;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-      align-items: flex-end;
+    &::part(native) {
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+
+      &:focus-within {
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  .select-container {
+    --background: transparent;
+    --border-width: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-end: 0;
+    margin: 0;
+
+    .select-label {
+      color: $text-secondary;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
-    .control-item {
-      flex: 1;
+    .clean-select {
+      --background: #{$bg-page};
+      --border-radius: #{$border-radius-md};
+      --padding-start: 15px;
+      --padding-end: 15px;
+      border: 2px solid transparent;
+      font-weight: 600;
+      color: $text-dark;
+      transition: border-color 0.3s;
 
-      &.search-control {
-        flex: 2;
-      }
-
-      .control-label {
-        display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: $text-light;
-        margin-bottom: 8px;
-      }
-
-      .custom-select {
-        --background: #{$light-bg};
-        --border-radius: 12px;
-        --padding-start: 15px;
-        --padding-end: 15px;
-        border: 1px solid #E0E0E0;
-        font-weight: 500;
-      }
-
-      .custom-searchbar {
-        --background: #{$light-bg};
-        --border-radius: 12px;
-        --box-shadow: none;
-        --icon-color: #{$text-light};
-        padding: 0;
+      &:focus {
+        border-color: $primary-color;
       }
     }
   }
 }
 
-// ESTATÍSTICAS
-.stats-section {
+// ============================================
+// CARDS DE ESTATÍSTICAS
+// ============================================
+.stats-container {
   padding: 0 15px 20px;
 
   .stat-card {
-    background: $card-bg;
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: $bg-card;
+    border-radius: $border-radius-lg;
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: $shadow-subtle;
     transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
 
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    &:active {
+      transform: scale(0.98);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     }
 
     .stat-icon {
-      font-size: 2.5rem;
-      padding: 12px;
-      border-radius: 12px;
+      margin-bottom: 12px;
 
-      &.students {
-        background: rgba(52, 152, 219, 0.1);
-        color: $secondary-color;
-      }
-
-      &.parents {
-        background: rgba(96, 153, 110, 0.1);
-        color: $accent-color;
-      }
-
-      &.commitments {
-        background: rgba(243, 156, 18, 0.1);
-        color: $warning-color;
-      }
-
-      &.pending {
-        background: rgba(231, 76, 60, 0.1);
-        color: $danger-color;
+      ion-icon {
+        font-size: 2.5rem;
+        color: $primary-color;
       }
     }
 
-    .stat-info {
-      h3 {
-        margin: 0;
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: $text-dark;
-      }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: $text-dark;
+      margin-bottom: 5px;
+      line-height: 1;
+    }
 
-      p {
-        margin: 0;
-        font-size: 0.85rem;
-        color: $text-light;
-        font-weight: 600;
-      }
+    .stat-label {
+      font-size: 0.85rem;
+      color: $text-secondary;
+      font-weight: 600;
     }
   }
 }
 
-// AÇÕES RÁPIDAS
-.actions-section {
+// ============================================
+// GRID DE AÇÕES PRINCIPAIS
+// ============================================
+.actions-container {
   padding: 0 15px 20px;
 
   .section-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: $text-dark;
     margin-bottom: 15px;
@@ -159,115 +165,98 @@ ion-content {
   }
 
   .action-card {
-    background: $card-bg;
-    border-radius: 16px;
-    padding: 25px 20px;
+    background: $bg-card;
+    border-radius: $border-radius-lg;
+    padding: 30px 20px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: $shadow-subtle;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 12px;
 
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
     &:active {
-      transform: translateY(-2px);
+      transform: scale(0.96);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     }
 
-    .action-icon-wrapper {
+    .action-icon {
       width: 70px;
       height: 70px;
+      background: color.adjust($primary-color, $alpha: -0.9);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 5px;
 
-      &.student-color {
-        background: linear-gradient(135deg, #3498DB, #2980B9);
-      }
-
-      &.parent-color {
-        background: linear-gradient(135deg, #60996E, #4E805A);
-      }
-
-      &.link-color {
-        background: linear-gradient(135deg, #9B59B6, #8E44AD);
-      }
-
-      &.commitment-color {
-        background: linear-gradient(135deg, #F39C12, #E67E22);
-      }
-
-      .action-icon {
-        font-size: 2rem;
-        color: white;
+      ion-icon {
+        font-size: 2.2rem;
+        color: $primary-color;
       }
     }
 
-    h3 {
-      margin: 0;
-      font-size: 1rem;
+    .action-label {
+      font-size: 0.9rem;
       font-weight: 700;
       color: $text-dark;
-    }
-
-    p {
-      margin: 0;
-      font-size: 0.8rem;
-      color: $text-light;
       line-height: 1.3;
     }
   }
 }
 
-// VISÃO GERAL
-.overview-section {
+// ============================================
+// CONTAINERS DE LISTAGEM (VISÃO GERAL)
+// ============================================
+.overview-container {
   padding: 0 15px 30px;
 
-  .overview-card {
-    background: $card-bg;
-    border-radius: 16px;
+  .list-card {
+    background: $bg-card;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-subtle;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
+    border: none;
 
-    .card-header {
-      background: linear-gradient(135deg, $primary-color, #34495E);
-      padding: 15px 20px;
+    .list-header {
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid $bg-page;
 
-      h3 {
+      .list-title {
         margin: 0;
         font-size: 1.1rem;
-        font-weight: 700;
-        color: white;
+        font-weight: 800;
+        color: $primary-color;
         display: flex;
         align-items: center;
         gap: 10px;
 
         ion-icon {
-          font-size: 1.3rem;
+          font-size: 1.4rem;
         }
       }
 
-      ion-badge {
+      .list-badge {
         font-size: 0.85rem;
         font-weight: 700;
+        padding: 5px 12px;
+        border-radius: 8px;
+        background: color.adjust($primary-color, $alpha: -0.9);
+        color: $primary-color;
       }
     }
 
-    .card-content {
-      padding: 15px;
+    .list-content {
+      padding: 10px;
       max-height: 400px;
       overflow-y: auto;
 
@@ -277,154 +266,117 @@ ion-content {
       }
 
       &::-webkit-scrollbar-track {
-        background: $light-bg;
-        border-radius: 10px;
+        background: transparent;
       }
 
       &::-webkit-scrollbar-thumb {
-        background: #BDC3C7;
+        background: color.adjust($primary-color, $alpha: -0.7);
         border-radius: 10px;
 
         &:hover {
-          background: #95A5A6;
+          background: color.adjust($primary-color, $alpha: -0.5);
         }
       }
 
-      .student-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        padding: 12px;
-        border-radius: 12px;
-        margin-bottom: 10px;
+      .list-item {
+        --background: transparent;
+        --border-width: 0;
+        --padding-start: 15px;
+        --padding-end: 15px;
+        --inner-padding-end: 0;
+        margin-bottom: 5px;
+        border-radius: $border-radius-md;
         transition: background 0.2s;
 
         &:hover {
-          background: $light-bg;
-        }
-
-        &:last-child {
-          margin-bottom: 0;
+          --background: #{$bg-page};
         }
 
         ion-avatar {
-          width: 50px;
-          height: 50px;
-          border: 2px solid $secondary-color;
+          width: 45px;
+          height: 45px;
+          border: 2px solid color.adjust($primary-color, $alpha: -0.8);
         }
 
-        .student-info {
-          flex: 1;
+        ion-label {
+          margin: 0;
 
-          h4 {
-            margin: 0 0 4px 0;
+          .item-title {
+            margin: 0 0 5px 0;
             font-size: 0.95rem;
             font-weight: 700;
             color: $text-dark;
           }
 
-          p {
+          .item-subtitle {
             margin: 0;
             font-size: 0.8rem;
-            color: $text-light;
-          }
-        }
-
-        ion-badge {
-          font-size: 0.7rem;
-          font-weight: 600;
-          padding: 4px 10px;
-        }
-      }
-
-      .commitment-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 15px;
-        padding: 12px;
-        border-radius: 12px;
-        margin-bottom: 10px;
-        transition: background 0.2s;
-        border-left: 4px solid transparent;
-
-        &:hover {
-          background: $light-bg;
-        }
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        &.exam {
-          border-left-color: $danger-color;
-
-          .commitment-icon {
-            background: rgba(231, 76, 60, 0.1);
-            color: $danger-color;
-          }
-        }
-
-        &.meeting {
-          border-left-color: $secondary-color;
-
-          .commitment-icon {
-            background: rgba(52, 152, 219, 0.1);
-            color: $secondary-color;
-          }
-        }
-
-        &.event {
-          border-left-color: $warning-color;
-
-          .commitment-icon {
-            background: rgba(243, 156, 18, 0.1);
-            color: $warning-color;
-          }
-        }
-
-        &.activity {
-          border-left-color: $success-color;
-
-          .commitment-icon {
-            background: rgba(39, 174, 96, 0.1);
-            color: $success-color;
-          }
-        }
-
-        .commitment-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-
-          ion-icon {
-            font-size: 1.3rem;
-          }
-        }
-
-        .commitment-info {
-          flex: 1;
-
-          h4 {
-            margin: 0 0 6px 0;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: $text-dark;
-          }
-
-          p {
-            margin: 0 0 6px 0;
-            font-size: 0.8rem;
-            color: $text-light;
+            color: $text-secondary;
             display: flex;
             align-items: center;
             gap: 5px;
 
             ion-icon {
               font-size: 0.9rem;
+              color: $text-light;
+            }
+          }
+        }
+
+        .status-badge {
+          font-size: 0.7rem;
+          font-weight: 700;
+          padding: 4px 10px;
+          border-radius: 6px;
+        }
+
+        // Estilos específicos para compromissos
+        &.commitment-item {
+          .commitment-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: color.adjust($primary-color, $alpha: -0.9);
+
+            ion-icon {
+              font-size: 1.4rem;
+              color: $primary-color;
+            }
+
+            // Variações de cor por tipo
+            &[data-type="exam"] {
+              background: rgba(231, 76, 60, 0.1);
+              
+              ion-icon {
+                color: #E74C3C;
+              }
+            }
+
+            &[data-type="meeting"] {
+              background: rgba(52, 152, 219, 0.1);
+              
+              ion-icon {
+                color: #3498DB;
+              }
+            }
+
+            &[data-type="event"] {
+              background: rgba(243, 156, 18, 0.1);
+              
+              ion-icon {
+                color: #F39C12;
+              }
+            }
+
+            &[data-type="activity"] {
+              background: color.adjust($primary-color, $alpha: -0.9);
+              
+              ion-icon {
+                color: $primary-color;
+              }
             }
           }
 
@@ -432,69 +384,108 @@ ion-content {
             font-size: 0.7rem;
             font-weight: 600;
             padding: 3px 8px;
+            border-radius: 5px;
+            background: $bg-page;
+            color: $text-secondary;
+            margin-top: 5px;
+            display: inline-block;
           }
         }
       }
 
       .empty-state {
         text-align: center;
-        padding: 40px 20px;
+        padding: 50px 20px;
         color: $text-light;
 
         ion-icon {
           font-size: 3rem;
           opacity: 0.3;
-          margin-bottom: 10px;
+          margin-bottom: 15px;
+          color: $text-light;
         }
 
         p {
           margin: 0;
           font-size: 0.9rem;
           font-weight: 500;
+          color: $text-secondary;
         }
       }
     }
   }
 }
 
+// ============================================
 // RESPONSIVIDADE
+// ============================================
 @media (max-width: 767px) {
-  .stats-section {
-    .stat-card {
-      padding: 15px;
+  .clean-toolbar {
+    .page-title {
+      font-size: 1.1rem;
+    }
+  }
 
-      .stat-icon {
+  .stats-container {
+    .stat-card {
+      padding: 20px 12px;
+
+      .stat-icon ion-icon {
         font-size: 2rem;
       }
 
-      .stat-info {
-        h3 {
-          font-size: 1.5rem;
-        }
+      .stat-number {
+        font-size: 1.6rem;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
       }
     }
   }
 
-  .actions-section {
+  .actions-container {
     .action-card {
-      padding: 20px 15px;
+      padding: 25px 15px;
 
-      .action-icon-wrapper {
+      .action-icon {
         width: 60px;
         height: 60px;
 
-        .action-icon {
-          font-size: 1.7rem;
+        ion-icon {
+          font-size: 1.8rem;
         }
       }
 
-      h3 {
-        font-size: 0.9rem;
-      }
-
-      p {
-        font-size: 0.75rem;
+      .action-label {
+        font-size: 0.85rem;
       }
     }
+  }
+
+  .overview-container {
+    .list-card {
+      .list-header {
+        padding: 15px;
+
+        .list-title {
+          font-size: 1rem;
+
+          ion-icon {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ============================================
+// MELHORIAS DE ACESSIBILIDADE
+// ============================================
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
   }
 }

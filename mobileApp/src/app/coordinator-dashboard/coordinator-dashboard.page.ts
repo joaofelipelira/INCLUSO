@@ -17,7 +17,8 @@ import {
   closeOutline,
   checkmarkCircleOutline,
   trashOutline,
-  createOutline
+  createOutline,
+  documentLockOutline  // ADICIONADO: ícone de prova
 } from 'ionicons/icons';
 
 // Modal Components (serão importados quando criados)
@@ -111,7 +112,8 @@ export class CoordinatorDashboardPage implements OnInit {
       closeOutline,
       checkmarkCircleOutline,
       trashOutline,
-      createOutline
+      createOutline,
+      documentLockOutline  // ADICIONADO
     });
   }
 
@@ -329,10 +331,10 @@ export class CoordinatorDashboardPage implements OnInit {
   // Retorna o ícone adequado para cada tipo de compromisso
   getCommitmentIcon(type: string): string {
     const icons: { [key: string]: string } = {
-      'exam': 'document-text-outline',
-      'meeting': 'people-outline',
-      'event': 'calendar-outline',
-      'activity': 'clipboard-outline'
+      'exam': 'document-lock-outline',        // PROVA/AVALIAÇÃO
+      'meeting': 'people-outline',            // REUNIÃO
+      'event': 'calendar-outline',            // EVENTO
+      'activity': 'create-outline'            // ATIVIDADE
     };
     return icons[type] || 'calendar-outline';
   }
