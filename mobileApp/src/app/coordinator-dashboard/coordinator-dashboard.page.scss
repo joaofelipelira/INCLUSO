@@ -1,0 +1,500 @@
+// Variáveis de Cores
+$primary-color: #2C3E50;
+$secondary-color: #3498DB;
+$accent-color: #60996E;
+$success-color: #27AE60;
+$warning-color: #F39C12;
+$danger-color: #E74C3C;
+$light-bg: #F8F9FA;
+$card-bg: #FFFFFF;
+$text-dark: #2C3E50;
+$text-light: #7F8C8D;
+
+ion-content {
+  --background: #{$light-bg};
+}
+
+// TOOLBAR
+.custom-toolbar {
+  --background: #{$primary-color};
+  --color: white;
+  --padding-top: 10px;
+  --min-height: 60px;
+
+  ion-title {
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+// HEADER COM FILTROS
+.dashboard-header {
+  background: $card-bg;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  .header-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-end;
+    }
+
+    .control-item {
+      flex: 1;
+
+      &.search-control {
+        flex: 2;
+      }
+
+      .control-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $text-light;
+        margin-bottom: 8px;
+      }
+
+      .custom-select {
+        --background: #{$light-bg};
+        --border-radius: 12px;
+        --padding-start: 15px;
+        --padding-end: 15px;
+        border: 1px solid #E0E0E0;
+        font-weight: 500;
+      }
+
+      .custom-searchbar {
+        --background: #{$light-bg};
+        --border-radius: 12px;
+        --box-shadow: none;
+        --icon-color: #{$text-light};
+        padding: 0;
+      }
+    }
+  }
+}
+
+// ESTATÍSTICAS
+.stats-section {
+  padding: 0 15px 20px;
+
+  .stat-card {
+    background: $card-bg;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      padding: 12px;
+      border-radius: 12px;
+
+      &.students {
+        background: rgba(52, 152, 219, 0.1);
+        color: $secondary-color;
+      }
+
+      &.parents {
+        background: rgba(96, 153, 110, 0.1);
+        color: $accent-color;
+      }
+
+      &.commitments {
+        background: rgba(243, 156, 18, 0.1);
+        color: $warning-color;
+      }
+
+      &.pending {
+        background: rgba(231, 76, 60, 0.1);
+        color: $danger-color;
+      }
+    }
+
+    .stat-info {
+      h3 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: $text-dark;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: $text-light;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// AÇÕES RÁPIDAS
+.actions-section {
+  padding: 0 15px 20px;
+
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: $text-dark;
+    margin-bottom: 15px;
+    padding-left: 5px;
+  }
+
+  .action-card {
+    background: $card-bg;
+    border-radius: 16px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
+
+    .action-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+
+      &.student-color {
+        background: linear-gradient(135deg, #3498DB, #2980B9);
+      }
+
+      &.parent-color {
+        background: linear-gradient(135deg, #60996E, #4E805A);
+      }
+
+      &.link-color {
+        background: linear-gradient(135deg, #9B59B6, #8E44AD);
+      }
+
+      &.commitment-color {
+        background: linear-gradient(135deg, #F39C12, #E67E22);
+      }
+
+      .action-icon {
+        font-size: 2rem;
+        color: white;
+      }
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: $text-dark;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: $text-light;
+      line-height: 1.3;
+    }
+  }
+}
+
+// VISÃO GERAL
+.overview-section {
+  padding: 0 15px 30px;
+
+  .overview-card {
+    background: $card-bg;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+
+    .card-header {
+      background: linear-gradient(135deg, $primary-color, #34495E);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        ion-icon {
+          font-size: 1.3rem;
+        }
+      }
+
+      ion-badge {
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+    }
+
+    .card-content {
+      padding: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+
+      // Estilização da Scrollbar
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $light-bg;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #BDC3C7;
+        border-radius: 10px;
+
+        &:hover {
+          background: #95A5A6;
+        }
+      }
+
+      .student-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        transition: background 0.2s;
+
+        &:hover {
+          background: $light-bg;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        ion-avatar {
+          width: 50px;
+          height: 50px;
+          border: 2px solid $secondary-color;
+        }
+
+        .student-info {
+          flex: 1;
+
+          h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: $text-dark;
+          }
+
+          p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: $text-light;
+          }
+        }
+
+        ion-badge {
+          font-size: 0.7rem;
+          font-weight: 600;
+          padding: 4px 10px;
+        }
+      }
+
+      .commitment-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        transition: background 0.2s;
+        border-left: 4px solid transparent;
+
+        &:hover {
+          background: $light-bg;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &.exam {
+          border-left-color: $danger-color;
+
+          .commitment-icon {
+            background: rgba(231, 76, 60, 0.1);
+            color: $danger-color;
+          }
+        }
+
+        &.meeting {
+          border-left-color: $secondary-color;
+
+          .commitment-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: $secondary-color;
+          }
+        }
+
+        &.event {
+          border-left-color: $warning-color;
+
+          .commitment-icon {
+            background: rgba(243, 156, 18, 0.1);
+            color: $warning-color;
+          }
+        }
+
+        &.activity {
+          border-left-color: $success-color;
+
+          .commitment-icon {
+            background: rgba(39, 174, 96, 0.1);
+            color: $success-color;
+          }
+        }
+
+        .commitment-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+
+          ion-icon {
+            font-size: 1.3rem;
+          }
+        }
+
+        .commitment-info {
+          flex: 1;
+
+          h4 {
+            margin: 0 0 6px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: $text-dark;
+          }
+
+          p {
+            margin: 0 0 6px 0;
+            font-size: 0.8rem;
+            color: $text-light;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            ion-icon {
+              font-size: 0.9rem;
+            }
+          }
+
+          .class-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 8px;
+          }
+        }
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: $text-light;
+
+        ion-icon {
+          font-size: 3rem;
+          opacity: 0.3;
+          margin-bottom: 10px;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// RESPONSIVIDADE
+@media (max-width: 767px) {
+  .stats-section {
+    .stat-card {
+      padding: 15px;
+
+      .stat-icon {
+        font-size: 2rem;
+      }
+
+      .stat-info {
+        h3 {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
+
+  .actions-section {
+    .action-card {
+      padding: 20px 15px;
+
+      .action-icon-wrapper {
+        width: 60px;
+        height: 60px;
+
+        .action-icon {
+          font-size: 1.7rem;
+        }
+      }
+
+      h3 {
+        font-size: 0.9rem;
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
